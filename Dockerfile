@@ -52,5 +52,16 @@ RUN sh /root/scripts/install-tools-golang.sh
 RUN sh /root/scripts/install-tools-cpp.sh
 RUN sh /root/scripts/install-tools-python.sh
 
+RUN apt-get -y update && \
+	apt-get -y upgrade && \
+	apt-get -y install sudo
+
+ENV TERM xterm
+
+RUN git clone https://github.com/yasinuslu/dotfiles $HOME/dotfiles && \
+	cd $HOME/dotfiles && \
+	./install.sh && \
+	chsh -s $(which fish)
+
 EXPOSE 8443
 CMD code-server $PWD
